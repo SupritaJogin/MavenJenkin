@@ -1,23 +1,43 @@
 pipeline {
     agent any
+
+    tools {
+        jdk 'jdk24'
+        maven 'Maven'
+    }
+
     stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/SupritaJogin/MavenJenkin.git'
+            }
+        }
+
         stage('Build') {
             steps {
-                echo 'Building...'
-                // Add your build commands here, e.g., mvn clean install
+                bat 'mvn clean package'
             }
         }
+
         stage('Test') {
             steps {
-                echo 'Testing...'
-                // Add your test commands here
+                bat 'mvn test'
             }
         }
-        stage('Deploy') {
+
+        stage('Run Application') {
             steps {
-                echo 'Deploying...'
-                // Add your deploy commands here
+                bat 'java -jar target\\MavenJenkin-1.0-SNAPSHOT.jar'
             }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Build and deployment successful!'
+        }
+        failure {
+            echo '❌ Build failed!'
         }
     }
 }
