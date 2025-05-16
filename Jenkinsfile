@@ -1,34 +1,36 @@
 pipeline {
     agent any
 
-   tools {
-        jdk 'jdk24'
-        maven 'Maven'
+    tools {
+        jdk 'jdk24'       // Your configured JDK name in Jenkins
+        maven 'Maven'     // Your configured Maven name in Jenkins
     }
-
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/Hemavathipcse/GradleJenkinsPipeline.git'
+                // Change this URL to your Maven project repo
+                git branch: 'main', url: 'https://github.com/SupritaJogin/MavenJenkin.git'
             }
         }
 
         stage('Build') {
             steps {
-                bat 'gradle build'
+                bat 'mvn clean install'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'gradle test'
+                // Usually tests run as part of mvn install, but if you want separate test phase:
+                bat 'mvn test'
             }
         }
 
         stage('Run Application') {
             steps {
-                bat 'gradle run'
+                // If your Maven project has a run goal, otherwise adjust accordingly
+                bat 'mvn exec:java'
             }
         }
     }
