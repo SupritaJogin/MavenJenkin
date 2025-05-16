@@ -16,19 +16,19 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'gradle build'
+                bat 'gradle build'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'gradle test'
+                bat 'gradle test'
             }
         }
 
         stage('Run Application') {
             steps {
-                sh 'gradle run'
+                bat 'gradle run'
             }
         }
     }
