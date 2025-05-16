@@ -2,42 +2,42 @@ pipeline {
     agent any
 
     tools {
-        jdk 'jdk24'
-        maven 'Maven'
+        gradle 'Gradle'
+        jdk 'JDK'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/SupritaJogin/MavenJenkin.git'
+                git branch: 'master', url: 'https://github.com/Hemavathipcse/GradleJenkinsPipeline.git'
             }
         }
 
         stage('Build') {
             steps {
-                bat 'mvn clean package'
+                sh 'gradle build'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'mvn test'
+                sh 'gradle test'
             }
         }
 
         stage('Run Application') {
             steps {
-                bat 'java -jar target\\MavenJenkin-1.0-SNAPSHOT.jar'
+                sh 'gradle run'
             }
         }
     }
 
     post {
         success {
-            echo '✅ Build and deployment successful!'
+            echo 'Build and deployment successful!'
         }
         failure {
-            echo '❌ Build failed!'
+            echo 'Build failed!'
         }
     }
 }
