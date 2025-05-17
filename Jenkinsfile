@@ -6,7 +6,7 @@ pipeline {
         maven 'Maven'     // Your configured Maven name in Jenkins
     }
 
-    stage {
+    stages {
         stage('Checkout') {
             steps {
                 // Change this URL to your Maven project repo
